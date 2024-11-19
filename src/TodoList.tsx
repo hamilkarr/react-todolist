@@ -4,19 +4,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod 스키마 정의
 const formSchema = z.object({
-  Email: z.string()
+  email: z.string()
     .email("유효한 이메일 주소를 입력해주세요"),
-  "First Name": z.string()
+  firstName: z.string()
     .min(1, "이름을 입력해주세요"),
-  "Last Name": z.string()
+  lastName: z.string()
     .min(1, "성을 입력해주세요"),
-  Password: z.string()
+  password: z.string()
     .min(8, "비밀번호는 최소 8자 이상이어야 합니다"),
-  "Confirm Password": z.string()
+  confirmPassword: z.string()
     .min(8, "비밀번호는 최소 8자 이상이어야 합니다")
-}).refine((data) => data.Password === data["Confirm Password"], {
+}).refine((data) => data.password === data.confirmPassword, {
   message: "비밀번호가 일치하지 않습니다",
-  path: ["Confirm Password"]
+  path: ["confirmPassword"]
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -42,37 +42,37 @@ const ToDoList = () => {
       }}
     >
       <input
-        {...register("Email")}
+        {...register("email")}
         placeholder="Email"
       />
-      {errors.Email && <span style={{ color: "red" }}>{errors.Email.message}</span>}
+      {errors.email && <span style={{ color: "red" }}>{errors.email.message}</span>}
       
       <input
-        {...register("First Name")}
+        {...register("firstName")}
         placeholder="First Name"
       />
-      {errors["First Name"] && <span style={{ color: "red" }}>{errors["First Name"].message}</span>}
+      {errors.firstName && <span style={{ color: "red" }}>{errors.firstName.message}</span>}
       
       <input
-        {...register("Last Name")}
+        {...register("lastName")}
         placeholder="Last Name"
       />
-      {errors["Last Name"] && <span style={{ color: "red" }}>{errors["Last Name"].message}</span>}
+      {errors.lastName && <span style={{ color: "red" }}>{errors.lastName.message}</span>}
       
       <input
         type="password"
-        {...register("Password")}
+        {...register("password")}
         placeholder="Password"
       />
-      {errors.Password && <span style={{ color: "red" }}>{errors.Password.message}</span>}
+      {errors.password && <span style={{ color: "red" }}>{errors.password.message}</span>}
       
       <input
         type="password"
-        {...register("Confirm Password")}
+        {...register("confirmPassword")}
         placeholder="Confirm Password"
       />
-      {errors["Confirm Password"] && (
-        <span style={{ color: "red" }}>{errors["Confirm Password"].message}</span>
+      {errors.confirmPassword && (
+        <span style={{ color: "red" }}>{errors.confirmPassword.message}</span>
       )}
       
       <button type="submit">Add</button>
