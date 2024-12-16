@@ -1,0 +1,23 @@
+services:
+  react-todo-list:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    # volumes:
+    #   - .:/app
+    #   - /app/node_modules
+
+    develop:
+      watch:
+        # - path: ./src/**/*.tsx
+        #   target: /app/src
+        #   action: sync+restart
+        # - path: package.json
+        #   action: rebuild
+      - action: sync+restart
+        path: /src
+        target: /app/src
+
+
