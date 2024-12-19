@@ -20,6 +20,17 @@ export const categoryState = atom<Categories>({
 export const toDoState = atom<IToDo[]>({
     key: "toDo",
     default: [],
+    effects_UNSTABLE: [
+        ({ setSelf, onSet }) => {
+            const savedTodos = localStorage.getItem("todos");
+            if (savedTodos) {
+                setSelf(JSON.parse(savedTodos));
+            }
+            onSet((newTodos) => {
+                localStorage.setItem("todos", JSON.stringify(newTodos));
+            });
+        }
+    ]
 });
 
 export const toDoSelector = selector({
