@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { toDoState } from "./atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryState, IToDo, toDoState } from "./atoms";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,11 +13,12 @@ type FormSchema = z.infer<typeof formSchema>;
 
 const CreateTodo = () => {
     const setToDo = useSetRecoilState(toDoState);
+    const category = useRecoilValue(categoryState);
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormSchema>({
         resolver: zodResolver(formSchema)
     });
     const handleValid = (data: FormSchema) => {
-        setToDo((prev) => [{ text: data.todo, id: Date.now(), category: "TO_DO" }, ...prev]);
+        setToDo((prev) => [{ text: data.todo, id: Date.now(), category: category as IToDo["category"] }, ...prev]);
         setValue('todo', '');
     };
     return (
@@ -28,7 +29,6 @@ const CreateTodo = () => {
                 flexDirection: "column",
                 gap: "10px",
                 width: "50vw",
-                margin: "50px auto",
             }}
         >
             <input
